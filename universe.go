@@ -49,7 +49,7 @@ func (f *universe) Next(x, y int) bool {
 	// Any live cell with two or three live neighbors lives on to the next generation
 	// Any live cell with more than three live neighbors dies, as if by overcrowding
 	// Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction
-	return (aliveCount == 2 || aliveCount == 3 && f.isAlive(x, y)) || (aliveCount == 3 && !f.isAlive(x, y))
+	return ((aliveCount == 2 || aliveCount == 3) && f.isAlive(x, y)) || (aliveCount == 3 && !f.isAlive(x, y))
 }
 
 // spawnPattern spawns given pattern at the given coords.
@@ -59,12 +59,12 @@ func (f *universe) spawnPattern(pattern *Pattern, x, y int) {
 	}
 
 	// calculate middle of the pattern
-	pMiddleX := int(math.Round(float64(pattern.w)/2))
-	pMiddleY := int(math.Round(float64(pattern.h)/2))
+	pMiddleX := int(math.Round(float64(pattern.w) / 2))
+	pMiddleY := int(math.Round(float64(pattern.h) / 2))
 
 	// spawn the pattern
-	for yi:=1; yi<= pattern.h; yi++ {
-		for xi:=1; xi<= pattern.w; xi++ {
+	for yi := 1; yi <= pattern.h; yi++ {
+		for xi := 1; xi <= pattern.w; xi++ {
 			if pattern.p[yi-1][xi-1] > 0 {
 				f.set(x+(xi-pMiddleX), y+(yi-pMiddleY), true)
 			}
